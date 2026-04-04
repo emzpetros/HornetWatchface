@@ -1,8 +1,23 @@
 #include <pebble.h>
 
+#define FRAME_DURATION 100
+#define FRAME_COUNT 5
+
 static Window *s_main_window;
 static TextLayer *s_time_layer;
 static TextLayer *s_date_layer;
+static BitmapLayer *s_bitmap_layer;
+
+static GBitmap *s_frame;
+// static GBitmap *s_frames[FRAME_COUNT];
+
+// static const uint32_t FRAME_RESOURCE_IDS[FRAME_COUNT] ={
+//   RESOURCE_ID_IDLE_FRAME_0,
+//   RESOURCE_ID_IDLE_FRAME_1,
+//   RESOURCE_ID_IDLE_FRAME_2,
+//   RESOURCE_ID_IDLE_FRAME_3,
+//   RESOURCE_ID_IDLE_FRAME_4,
+// }
 
 static void update_time() {
   // Get a tm structure
@@ -33,32 +48,49 @@ static void main_window_load(Window *window) {
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
-
+  
+  int16_t thirdHeight = bounds.size.h / 3;
+  
   // Create the time TextLayer
   s_time_layer = text_layer_create(
-      GRect(0, PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 50));
+      GRect(0, 20, bounds.size.w, 50));
+//     s_time_layer = text_layer_create(
+//       GRect(0, PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 50));
   text_layer_set_background_color(s_time_layer, GColorClear);
   text_layer_set_text_color(s_time_layer, GColorWhite);
   text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 
   // Create the date TextLayer
+  
   s_date_layer = text_layer_create(
-      GRect(0, PBL_IF_ROUND_ELSE(110, 104), bounds.size.w, 30));
+      GRect(0, 20 +PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 30));
+//   s_date_layer = text_layer_create(
+//       GRect(0, PBL_IF_ROUND_ELSE(110, 104), bounds.size.w, 30));
   text_layer_set_background_color(s_date_layer, GColorClear);
   text_layer_set_text_color(s_date_layer, GColorWhite);
   text_layer_set_font(s_date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
+  
+  // Animation layer
+  s_bitmap_layer = bitmap_layer_create(GRect(0, 100, bounds.size.w, 100));
 
+  s_frame = gbitmap_create_with_resource(RESOURCE_ID_IDLE_FRAME_0);
   // Add layers to the Window
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
+  layer_add_child(window_layer, bitmap_layer_get_layer(s_bitmap_layer));
+  bitmap_layer_set_bitmap(s_bitmap_layer, s_frame);
+  bitmap_layer_set_alignment(s_bitmap_layer, GAlignCenter);
 }
 
 static void main_window_unload(Window *window) {
   // Destroy TextLayers
   text_layer_destroy(s_time_layer);
   text_layer_destroy(s_date_layer);
+  
+  gbitmap_destroy(s_frame);
+  bitmap_layer_destroy(s_bitmap_layer);
 }
 
 static void init() {
