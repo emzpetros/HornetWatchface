@@ -1,0 +1,75 @@
+{
+    "author": "Petros Productions",
+    "dependencies": {},
+    "keywords": [
+        "pebble-app"
+    ],
+    "name": "hornet",
+    "pebble": {
+        "displayName": "HornetWatchface",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/hornet_idle_0.png",
+                    "name": "IDLE_FRAME_0",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_idle_0.png",
+                    "name": "IDLE_FRAME_1",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_idle_1.png",
+                    "name": "IDLE_FRAME_1",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_idle_2.png",
+                    "name": "IDLE_FRAME_2",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_idle_4.png",
+                    "name": "IDLE_FRAME_4",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_idle_3.png",
+                    "name": "IDLE_FRAME_3",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_idle_5.png",
+                    "name": "IDLE_FRAME_5",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "chalk",
+            "diorite",
+            "emery",
+            "gabbro",
+            "flint"
+        ],
+        "uuid": "ee5c8322-9f71-45fb-97d0-754cd12f0698",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}
