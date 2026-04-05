@@ -3,6 +3,7 @@
 #define FRAME_DURATION 150
 #define FRAME_COUNT 5
 
+static Layer *s_window_layer;
 static Window *s_main_window;
 static TextLayer *s_time_layer;
 static TextLayer *s_date_layer;
@@ -64,21 +65,66 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
 }
 
+static void prv_unobstructed_will_change(GRect final_unobstructed_screen_area,
+                                         void *context) {
+  // TODO hide hornet quote layer 
+}
+
+static void prv_unobstructed_did_change(void *context) {
+  GRect full_bounds = layer_get_bounds(s_window_layer);
+  GRect bounds = layer_get_unobstructed_bounds(s_window_layer);
+  bool obstructed = !grect_equal(&full_bounds, &bounds);
+
+  // Keep BT icon hidden when obstructed, otherwise restore based on connection
+  if (obstructed) {
+    //keep text hidden
+  } else {
+    //unhide quote text
+  }
+}
+
+
+static void prv_unobstructed_change(AnimationProgress progress, void *context) {
+  GRect bounds = layer_get_unobstructed_bounds(s_window_layer);
+
+  int time_height = 40;
+  int date_height = 15;
+  int anim_height = 70;
+  int padding = 2;  // tighter than before
+
+  int total_height = time_height + date_height + anim_height + (padding * 2);
+  int start_y = (bounds.size.h / 2) - (total_height / 2);
+
+  int time_y = start_y;
+  int date_y = time_y + time_height + padding;
+  int anim_y = date_y + date_height + padding;
+
+  GRect time_frame = layer_get_frame(text_layer_get_layer(s_time_layer));
+  time_frame.origin.y = time_y;
+  layer_set_frame(text_layer_get_layer(s_time_layer), time_frame);
+
+  GRect date_frame = layer_get_frame(text_layer_get_layer(s_date_layer));
+  date_frame.origin.y = date_y;
+  layer_set_frame(text_layer_get_layer(s_date_layer), date_frame);
+
+  GRect anim_frame = layer_get_frame(bitmap_layer_get_layer(s_bitmap_layer));
+  anim_frame.origin.y = anim_y;
+  layer_set_frame(bitmap_layer_get_layer(s_bitmap_layer), anim_frame);
+}
 
 static void main_window_load(Window *window) {
   // Get information about the Window
-  Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
+  s_window_layer = window_get_root_layer(window);
+  GRect bounds = layer_get_bounds(s_window_layer);
   
   //Fonts
-  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TRAJAN_52));
-  s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TRAJAN_24));
+  s_time_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TRAJAN_BOLD_30));
+  s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TRAJAN_BOLD_16));
   
   //int16_t thirdHeight = bounds.size.h / 3;
   
   // Create the time TextLayer
-  s_time_layer = text_layer_create(
-      GRect(0, 20, bounds.size.w, 50));
+  s_time_layer = text_layer_create(GRect(0, 10, bounds.size.w, 50));
 //     s_time_layer = text_layer_create(
 //       GRect(0, PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 50));
   text_layer_set_background_color(s_time_layer, GColorClear);
@@ -88,8 +134,7 @@ static void main_window_load(Window *window) {
   
   // Create the date TextLayer
   
-  s_date_layer = text_layer_create(
-      GRect(0, 20 +PBL_IF_ROUND_ELSE(58, 52), bounds.size.w, 30));
+  s_date_layer = text_layer_create(GRect(0, 62, bounds.size.w, 30));
 //   s_date_layer = text_layer_create(
 //       GRect(0, PBL_IF_ROUND_ELSE(110, 104), bounds.size.w, 30));
   text_layer_set_background_color(s_date_layer, GColorClear);
@@ -99,7 +144,7 @@ static void main_window_load(Window *window) {
   
   // Animation layer
   
-  s_bitmap_layer = bitmap_layer_create(GRect(0, 100, bounds.size.w, 100));
+  s_bitmap_layer = bitmap_layer_create(GRect(0, 94, bounds.size.w, 100));
   
   for(int i = 0; i < FRAME_COUNT; i ++){
     s_frames[i] = gbitmap_create_with_resource(FRAME_RESOURCE_IDS[i]);
@@ -109,10 +154,22 @@ static void main_window_load(Window *window) {
   
 
   // Add layers to the Window
-  layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
-  layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
-  layer_add_child(window_layer, bitmap_layer_get_layer(s_bitmap_layer));
+  layer_add_child(s_window_layer, text_layer_get_layer(s_time_layer));
+  layer_add_child(s_window_layer, text_layer_get_layer(s_date_layer));
+  layer_add_child(s_window_layer, bitmap_layer_get_layer(s_bitmap_layer));
   bitmap_layer_set_alignment(s_bitmap_layer, GAlignCenter);
+  
+  //Quick peek API
+   prv_unobstructed_change(0, NULL);
+  prv_unobstructed_did_change(NULL);
+  
+  UnobstructedAreaHandlers handlers = {
+  .will_change = prv_unobstructed_will_change,
+  .change = prv_unobstructed_change,
+  .did_change = prv_unobstructed_did_change
+};
+unobstructed_area_service_subscribe(handlers, NULL);
+
 }
 
 static void main_window_unload(Window *window) {

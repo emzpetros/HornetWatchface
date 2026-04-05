@@ -14,7 +14,7 @@
             "media": [
                 {
                     "file": "fonts/TrajanPro-Regular.ttf",
-                    "name": "FONT_TRAJAN_52",
+                    "name": "FONT_TRAJAN_30",
                     "targetPlatforms": null,
                     "type": "font"
                 },
@@ -25,10 +25,22 @@
                     "type": "font"
                 },
                 {
+                    "file": "fonts/TrajanPro-Bold.otf",
+                    "name": "FONT_TRAJAN_BOLD_30",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
                     "file": "images/hornet_idle_0.png",
                     "name": "IDLE_FRAME_0",
                     "targetPlatforms": null,
                     "type": "bitmap"
+                },
+                {
+                    "file": "fonts/TrajanPro-Bold - Copy.otf",
+                    "name": "FONT_TRAJAN_BOLD_16",
+                    "targetPlatforms": null,
+                    "type": "font"
                 },
                 {
                     "file": "images/hornet_idle_1.png",
