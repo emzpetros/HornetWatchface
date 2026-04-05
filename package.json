@@ -25,6 +25,12 @@
                     "type": "font"
                 },
                 {
+                    "file": "images/hornet_bw_5.png",
+                    "name": "HORNET_IDLE_BW_5",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
                     "file": "fonts/TrajanPro-Bold.otf",
                     "name": "FONT_TRAJAN_BOLD_30",
                     "targetPlatforms": null,
@@ -61,6 +67,12 @@
                     "type": "bitmap"
                 },
                 {
+                    "file": "images/hornet_bw_0.png",
+                    "name": "HORNET_IDLE_BW_0",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/hornet_idle_2.png",
                     "name": "IDLE_FRAME_2",
                     "targetPlatforms": null,
@@ -69,6 +81,30 @@
                 {
                     "file": "images/hornet_idle_4.png",
                     "name": "IDLE_FRAME_4",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_bw_1.png",
+                    "name": "HORNET_IDLE_BW_1",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_bw_2.png",
+                    "name": "HORNET_IDLE_BW_2",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_bw_3.png",
+                    "name": "HORNET_IDLE_BW_3",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/hornet_bw_4.png",
+                    "name": "HORNET_IDLE_BW_4",
                     "targetPlatforms": null,
                     "type": "bitmap"
                 }

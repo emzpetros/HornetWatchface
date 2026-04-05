@@ -13,12 +13,21 @@ static AppTimer *s_animation_timer = NULL;
 static int s_frame_index = 0;
 static GBitmap *s_frames[FRAME_COUNT];
 
-static const uint32_t FRAME_RESOURCE_IDS[FRAME_COUNT] ={
+static const uint32_t FRAME_RESOURCE_IDS[FRAME_COUNT] = {
+#ifdef PBL_COLOR
   RESOURCE_ID_IDLE_FRAME_0,
   RESOURCE_ID_IDLE_FRAME_1,
   RESOURCE_ID_IDLE_FRAME_2,
   RESOURCE_ID_IDLE_FRAME_3,
   RESOURCE_ID_IDLE_FRAME_4,
+#else
+  // 1-bit aplite versions
+  RESOURCE_ID_HORNET_IDLE_BW_0,
+  RESOURCE_ID_HORNET_IDLE_BW_1,
+  RESOURCE_ID_HORNET_IDLE_BW_2,
+  RESOURCE_ID_HORNET_IDLE_BW_3,
+  RESOURCE_ID_HORNET_IDLE_BW_4,
+#endif
 };
 
 //
