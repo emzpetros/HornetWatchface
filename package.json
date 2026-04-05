@@ -13,6 +13,18 @@
         "resources": {
             "media": [
                 {
+                    "file": "fonts/TrajanPro-Regular.ttf",
+                    "name": "FONT_TRAJAN_52",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/TrajanPro-Regular - Copy.ttf",
+                    "name": "FONT_TRAJAN_24",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
                     "file": "images/hornet_idle_0.png",
                     "name": "IDLE_FRAME_0",
                     "targetPlatforms": null,
